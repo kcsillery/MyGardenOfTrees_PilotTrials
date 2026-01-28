@@ -1,47 +1,90 @@
-# MyGardenOfTrees_PilotTrials
-**Data analysis scripts for the MyGardenOfTrees pilot trials: climate chamber and field trials**
+# 🌱 MyGardenOfTrees — Pilot Trials
 
-The manuscript from this work is available on bioRxiv:
+**Data analysis scripts for the *MyGardenOfTrees* pilot trials**, including climate chamber experiments and field (micro-garden) trials.
 
-Cite it as:
+---
 
+## 📄 Manuscript
 
-The **data** folder contains raw and processed data files:
+The manuscript associated with this work is available on **bioRxiv**.
 
-Abies_MLE.txt and Fagus_MLE.txt: maximum likelihood parameter estimates from the Markov model
+> *Citation information will be added here.*
 
-climate_chamber_pheno_stages_seeds.csv: climate chamber germination data for survival analysis
+---
 
-dat_surv.csv: climate chamber germination data for plotting
+## 📁 Repository Structure
 
-dat2022.RData: field trial (micro-garden) data for mixed-effects models for germination; the dataset also contains the environmental variables
+### `data/`
+Raw and processed datasets used in the analyses.
 
-dat.RData: field trial (micro-garden) data for 3-year survival analysis
+- **`Abies_MLE.txt`**, **`Fagus_MLE.txt`**  
+  Maximum likelihood parameter estimates from the Markov model
 
-seed_dat_cols.csv and seed_provenance_details.csv: seed traits and provenance information, color code used
+- **`climate_chamber_pheno_stages_seeds.csv`**  
+  Climate chamber germination data for survival analysis
 
-Table_S1_environmental_variables_LASSO.xlsx: the list of environmental variables considered for variable selection
+- **`dat_surv.csv`**  
+  Climate chamber germination data for plotting
 
+- **`dat2022.RData`**  
+  Field trial (micro-garden) data for germination mixed-effects models  
+  *(includes environmental variables)*
 
-The **scripts** folder contains the R scripts for analysis and visualization:
+- **`dat.RData`**  
+  Field trial (micro-garden) data for 3-year survival analysis
 
-00_plot.r: functions for visualization of the Markov model outcome
+- **`seed_dat_cols.csv`**, **`seed_provenance_details.csv`**  
+  Seed traits and provenance information (including color codes)
 
-0_CC_surv_analysis.r: raw data visualization, germination metrics, and survival analysis from the climate chamber trial data (Figure 2 of the manuscript)
+- **`Table_S1_environmental_variables_LASSO.xlsx`**  
+  Environmental variables considered for variable selection
 
-1_MG_figure_rawdata.r: raw data visualization of the micro-garden data
+---
 
-2_MG_lasso_varselect.r: selection of the environmental variables for the mixed-effects models using LASSO regression
+### `scripts/`
+R scripts for statistical analysis and figure generation.
 
-3_MG_mixedmodel_env.r: mixed-effects models of the germination data from the micro-gardens (**Asreml-R licence required**) (Figure 4 of the manuscript)
+- **`00_plot.r`**  
+  Visualization functions for Markov model outputs
 
-4_MG_plot_markovmodel.r: visualize the germination and developmental speed parameters estimated from the climate chamber and micro-garden trials (Figure 3 of the manuscript)
+- **`0_CC_surv_analysis.r`**  
+  Climate chamber trial: raw data visualization, germination metrics, and survival analysis  
+  *(Figure 2)*
 
-5_MG_3years_survival.r: 3-year survival analysis from the micro-gardens (Figure 5 of the manuscript)
+- **`1_MG_figure_rawdata.r`**  
+  Raw data visualization for micro-garden trials
 
+- **`2_MG_lasso_varselect.r`**  
+  Environmental variable selection using LASSO regression
 
-The **docs** folder contains supplementary documents
+- **`3_MG_mixedmodel_env.r`**  
+  Mixed-effects models for micro-garden germination data  
+  ⚠️ *Requires an **Asreml-R** license*  
+  *(Figure 4)*
 
-Protocol_MyGardenOfTrees_Trials_2021-2026_EN.pdf: protocol for establishing the micro-gardens
+- **`4_MG_plot_markovmodel.r`**  
+  Visualization of germination and developmental speed parameters from climate chamber and micro-garden trials  
+  *(Figure 3)*
 
-XLSForms for performing the observations
+- **`5_MG_3years_survival.r`**  
+  Three-year survival analysis from micro-garden trials  
+  *(Figure 5)*
+
+---
+
+### `docs/`
+Supplementary documentation.
+
+- **`Protocol_MyGardenOfTrees_Trials_2021-2026_EN.pdf`**  
+  Protocol for establishing and monitoring micro-gardens
+
+- **XLSForms**  
+  Forms used for field and experimental observations
+
+---
+
+## 🧰 Requirements
+
+- R (version used in the analyses recommended)
+- Required R packages (see individual scripts)
+- **Asreml-R** license for mixed-effects model analyses
