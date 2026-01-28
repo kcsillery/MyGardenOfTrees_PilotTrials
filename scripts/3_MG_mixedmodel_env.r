@@ -1,22 +1,30 @@
+## ##########################################################################
+
+## Katalin Csillery
+
+## 28 Jan 2026
+
+## For the manuscript:
+## Gene–environment interactions govern early regeneration in fir and
+## beech: evidence from participatory provenance trials across Europe
+## by Katalin Csilléry, Justine Charlet de Sauvage, Madleina Caduff,
+## Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel
+## Wegmann
+
+## ###########################################################################
+
 library(asreml)
-##asreml.license.activate()
-## HCEE-JCDA-JBFD-BJFA
 library(lubridate)
 library(RColorBrewer)
 
 library(ggplot2)
 library(patchwork)
 
-## ======================================================================
-
 ## understanding which environmental factors that affect germination
 ## and the relative roles of garden vs env (variance components)
 
-## ======================================================================
-
-setwd('/home/kati/Dropbox/projects/MyGardenOfTrees_trials/Manuscripts/MGOT_PilotTrials/analysis/gardens/')
-load("dat2022_germ.RData") ## see 2_lasso_varselect.r
-load(file="best_lasso_variables.RData")
+load("dat2022_germ.RData") ## see 2_MG_lasso_varselect.r
+load(file="best_lasso_variables.RData") ## see 2_MG_lasso_varselect.r
 ##unlist(group_list_fagus); unlist(group_list_abies)
 intersect(unlist(group_list_fagus), unlist(group_list_abies))
 

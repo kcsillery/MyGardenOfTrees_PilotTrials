@@ -234,19 +234,3 @@ mtext("h", line=2.3, adj=0, cex=1.8)
 
 dev.off()
 
-
-
-## combine with climate/env data
-load(file="datPD.RData")
-datPG <- datPG[, -c(26:27)]) ## remove seed weight & moisture = wrong values
-datPG <- subset(datPG, Provenance != "Switzerland Salenstein")
-datPG$Provenance[datPG$Provenance == "Iran Alborz Mountains High"] <- "Iran Alborz Mountains"
-datPG$Provenance[datPG$Provenance == "Iran Alborz Mountains Middle"] <- "Iran Alborz Mountains"
-
-
-## create common columns
-dat$Garden_ID <- as.character(as.numeric(unlist(lapply(strsplit(dat$garden, split="_"), function(a) a[1]))))
-dat$Block <- gsub("21", "", unlist(lapply(strsplit(dat$garden, split="_"), function(a) a[2])))
-
-dat2 = merge(dat, datPG, by=c("Garden_ID", "Genus", "Provenance"), all=T)
-
