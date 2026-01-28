@@ -91,3 +91,15 @@ Supplementary documentation.
 - Required R packages (see individual scripts)
 - **Asreml-R** license for mixed-effects model analyses
 
+---
+
+## ⚙️ Model Implementation
+
+The model and inference scheme described in the manuscript were implemented as a **command-line C++ program**, **`tree_growth`**, using the **`stattools`** library.
+
+- **Source code & user manual:**  
+  https://bitbucket.org/wegmannlab/tree_growth/
+
+- **Reproducibility note:**  
+  All estimations presented in the manuscript were performed using commit  
+  **`a9ae485`**.
