@@ -87,6 +87,7 @@ Supplementary documentation.
 
 ## 🧰 Requirements
 
-- R (version used in the analyses recommended)
+- **R version:** 4.3.3 (2024-02-29) — *“Angel Food Cake”*
 - Required R packages (see individual scripts)
 - **Asreml-R** license for mixed-effects model analyses
+
