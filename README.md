@@ -75,13 +75,27 @@ R scripts for statistical analysis and figure generation.
 ---
 
 ### `docs/`
-Supplementary documentation.
 
-- **`Protocol_MyGardenOfTrees_Trials_2021-2026_EN.pdf`**  
-  Protocol for establishing and monitoring micro-gardens
+Supporting Information files as referenced in the manuscript.
 
-- **XLSForms**  
-  Forms used for field and experimental observations
+- **`Figures_S1-14_Table_S1.pdf`**  
+  Supplementary figures and table, including:
+  - Experimental setups for climate chamber and micro-garden trials
+  - Phenological stages used to score germination and early development
+  - Environmental predictor selection and regression coefficients
+  - Germination trajectories in climate chambers and field experiments
+  - Phenological development of fir (*Abies*) and beech (*Fagus*) seedlings
+  - Model diagnostics  
+  - **Table S1:** Germination metrics across species, provenances, treatments, and experimental cycles
+
+- **`Methods_S1.pdf`**  
+  Protocols for establishing and monitoring the *MyGardenOfTrees* climate chamber and micro-garden experiments.
+
+- **`Methods_S2.pdf`**  
+  Description of a hidden Markov model of seed germination, phenological development, and mortality, including the inference and importance sampling scheme.
+
+- **`Dataset_S1.zip`**  
+  XLSForms and associated media files used for standardized data collection in the *MyGardenOfTrees* citizen science project.
 
 ---
 
