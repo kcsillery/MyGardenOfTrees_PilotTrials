@@ -1,0 +1,24 @@
+ID,Latitude,Longitude,Altitude,Species,Genus,Provenance,Seed_weight_g,Moisture_content_percent,Data_origin
+AA_AT1,47.29221,15.18974,900,Abies alba,Abies,Austria Zwischenalp South,,,
+AA_HR1,45.5696686439161,14.6129322626927,914,Abies alba,Abies,Croatia Crni Lazi,45.13,10.55,WSL measure
+AA_FR1,42.25,8.8,1100,Abies alba,Abies,France Corse,47.21,7.57,WSL measure
+AA_FR2,44.05,6.51,990,Abies alba,Abies,France Haute Provence,39.59,15.69,WSL measure
+AA_FR4,45.9,3.45,475,Abies alba,Abies,France Massif Central West,,,
+AA_FR3,42.85256,1.67607,1100,Abies alba,Abies,France Pyrenees,44.05,11.72,WSL measure
+AN_GE1,42.5144988,43.1457691,1140,Abies nordmanniana,Abies,Georgia Ambrolauri,68.54,7.47,WSL measure
+AA_DE1,47.79694,12.80972,875,Abies alba,Abies,Germany Traunstein,45.35,8,seed provider
+AA_IT1,45.956944,11.298889,1230,Abies alba,Abies,Italy Lavarone Trento,39.73,11.56,WSL measure
+AA_PL1,50.9338,15.8323,900,Abies alba,Abies,Poland Sudety,66.37,14.08,WSL measure
+AA_RO1,45.6993199,26.4619798,650,Abies alba,Abies,Romania SE Carpathians,57.53,13.7,WSL measure
+AA_SK1,49.3,19.3,890,Abies alba,Abies,Slovakia North Region,47.71,16.49,WSL measure
+AA_SI1,46.533333,15.25,900,Abies alba,Abies,Slovenia Pohorsko,42.12,10.37,seed provider
+FS_AT1,46.4453,14.26779,900,Fagus sylvatica,Fagus,Austria Randgebirge South,,,
+FS_FR1,48.37,0.1,260,Fagus sylvatica,Fagus,France Massif Armoricain,239.19,11.35,WSL measure
+FS_FR2,44.78,1.88,500,Fagus sylvatica,Fagus,France Massif Central North,,,
+FC_IR1,36.304333,52.143167,1873,Fagus orientalis,Fagus,Iran Alborz Mountains High,251.13,15.88,taken from Middle
+FC_IR2,36.314667,52.129139,1442,Fagus orientalis,Fagus,Iran Alborz Mountains Middle,251.13,15.88,WSL measure
+FS_IT1,45.683611,10.988889,1370,Fagus sylvatica,Fagus,Italy Passo Fittanze,213.34,6.85,WSL measure
+FS_RO1,47.818072,25.608094,792.5,Fagus sylvatica,Fagus,Romania SE Carpathians,260.77,12.6,WSL measure
+FS_SK1,49,19.95,845,Fagus sylvatica,Fagus,Slovakia Middle Region,246.7,11.07,WSL measure
+FS_SI1,45.6,15.05,782.5,Fagus sylvatica,Fagus,Slovenia Dinarsko,218.58,8.61,WSL measure
+FS_CH1,47.6689605,9.0587469,400,Fagus sylvatica,Fagus,Switzerland Salenstein,293.63,21.6,WSL measure

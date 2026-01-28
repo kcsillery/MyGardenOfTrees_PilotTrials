@@ -1,0 +1,25 @@
+ID,Genus,col,Latitude,Longitude,Altitude,Species,Provenance,Seed_weight_g,Moisture_content_percent,Data_origin
+AA_AT1,Abies,#DFE07CFF,47.29221,15.18974,900,Abies alba,Austria Zwischenalp South,NA,NA,
+AA_DE1,Abies,#1D3554FF,47.79694,12.80972,875,Abies alba,Germany Traunstein,45.35,8,seed provider
+AA_FR1,Abies,#CBC106FF,42.25,8.8,1100,Abies alba,France Corse,47.21,7.57,WSL measure
+AA_FR2,Abies,#27993CFF,44.05,6.51,990,Abies alba,France Haute Provence,39.59,15.69,WSL measure
+AA_FR3,Abies,#1C6838FF,42.85256,1.67607,1100,Abies alba,France Pyrenees,44.05,11.72,WSL measure
+AA_FR4,Abies,#570D32FF,45.9,3.45,475,Abies alba,France Massif Central West,NA,NA,
+AA_HR1,Abies,#8EBCB5FF,45.5696686439161,14.6129322626927,914,Abies alba,Croatia Crni Lazi,45.13,10.55,WSL measure
+AA_IT1,Abies,#389CA7FF,45.956944,11.298889,1230,Abies alba,Italy Lavarone Trento,39.73,11.56,WSL measure
+AA_PL1,Abies,#4D83ABFF,50.9338,15.8323,900,Abies alba,Poland Sudety,66.37,14.08,WSL measure
+AA_RO1,Abies,#CB7B26FF,45.6993199,26.4619798,650,Abies alba,Romania SE Carpathians,57.53,13.7,WSL measure
+AA_SI1,Abies,#454B87FF,46.533333,15.25,900,Abies alba,Slovenia Pohorsko,42.12,10.37,seed provider
+AA_SK1,Abies,#BF565DFF,49.3,19.3,890,Abies alba,Slovakia North Region,47.71,16.49,WSL measure
+AN_GE1,Abies,#9E163CFF,42.5144988,43.1457691,1140,Abies nordmanniana,Georgia Ambrolauri,68.54,7.47,WSL measure
+FC_IR1,Fagus,#61BEA4FF,36.304333,52.143167,1873,Fagus caspica,Iran Alborz Mountains High,251.13,15.88,taken from Middle
+FC_IR2,Fagus,#61BEA4FF,36.314667,52.129139,1442,Fagus caspica,Iran Alborz Mountains Middle,251.13,15.88,WSL measure
+FC_IR2,Fagus,#61BEA4FF,36.314667,52.129139,1442,Fagus caspica,Iran Alborz Mountains,251.13,15.88,WSL measure
+FS_AT1,Fagus,#2E92A2FF,46.4453,14.26779,900,Fagus sylvatica,Austria Randgebirge South,NA,NA,
+FS_CH1,Fagus,NA,47.6689605,9.0587469,400,Fagus sylvatica,Switzerland Salenstein,293.63,21.6,WSL measure
+FS_FR1,Fagus,#B6E7E0FF,48.37,0.1,260,Fagus sylvatica,France Massif Armoricain,239.19,11.35,WSL measure
+FS_FR2,Fagus,#FFB651FF,44.78,1.88,500,Fagus sylvatica,France Massif Central North,NA,NA,
+FS_IT1,Fagus,#AA3F5DFF,45.683611,10.988889,1370,Fagus sylvatica,Italy Passo Fittanze,213.34,6.85,WSL measure
+FS_RO1,Fagus,#D85A44FF,47.818072,25.608094,792.5,Fagus sylvatica,Romania SE Carpathians,260.77,12.6,WSL measure
+FS_SI1,Fagus,#DAA5ACFF,45.6,15.05,782.5,Fagus sylvatica,Slovenia Dinarsko,218.58,8.61,WSL measure
+FS_SK1,Fagus,#98A54FFF,49,19.95,845,Fagus sylvatica,Slovakia Middle Region,246.7,11.07,WSL measure
