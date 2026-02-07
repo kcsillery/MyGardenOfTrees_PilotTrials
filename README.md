@@ -10,7 +10,9 @@
 
 The manuscript associated with this work is available on **bioRxiv**.
 
-> *Citation information will be added here.*
+Gene–environment interactions govern early regeneration in fir and beech: evidence from participatory provenance trials across Europe
+Katalin Csilléry, Justine Charlet de Sauvage, Madleina Caduff, Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel Wegmann
+bioRxiv 2026.01.29.702314; doi: https://doi.org/10.64898/2026.01.29.702314 
 
 ---
 
@@ -40,6 +42,11 @@ Raw and processed datasets used in the analyses.
 
 - **`Table_S1_environmental_variables_LASSO.xlsx`**  
   Environmental variables considered for variable selection
+
+---
+
+### `GDD/`
+Growing-degree-days used in the Markov model for the climate chamber cycles and micro-gardens.
 
 ---
 
