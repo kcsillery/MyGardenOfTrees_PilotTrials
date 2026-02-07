@@ -1,27 +1,53 @@
-## ##########################################################################
+# Script: 3_MG_mixedmodel_env.r
+# Title: Mixed models for environmental and seed predictors
+# Manuscript:
+# Gene–environment interactions govern early regeneration in fir and
+# beech: evidence from participatory provenance trials across Europe
+# by Katalin Csilléry, Justine Charlet de Sauvage, Madleina Caduff,
+# Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel Wegmann
+# Authors: Katalin Csillery
+# Created: 2026-01-28
+# Last updated: 2026-02-07
+##
+# Inputs: dat2022_germ.RData, best_lasso_variables.RData
+# Outputs: asreml model objects and variance component summaries
+##
+# Notes:
+# Run this script from the project root so relative paths resolve correctly.
+# This script is written as analysis code for a scientific publication.
 
-## Katalin Csillery
+# Overview
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## 28 Jan 2026
+# Overview
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## For the manuscript:
-## Gene–environment interactions govern early regeneration in fir and
-## beech: evidence from participatory provenance trials across Europe
-## by Katalin Csilléry, Justine Charlet de Sauvage, Madleina Caduff,
-## Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel
-## Wegmann
+# Load packages used in this script
+# =============================================================================
+# Overview
+# =============================================================================
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## ###########################################################################
+# Load packages used in this script
+suppressPackageStartupMessages({
+  library(asreml)
+  library(lubridate)
+  library(RColorBrewer)
+})
 
-library(asreml)
-library(lubridate)
-library(RColorBrewer)
-
+# Load packages used in this script
 library(ggplot2)
+# Load packages used in this script
 library(patchwork)
 
-## understanding which environmental factors that affect germination
-## and the relative roles of garden vs env (variance components)
+# understanding which environmental factors that affect germination
+# and the relative roles of garden vs env (variance components)
 
 load("dat2022_germ.RData") ## see 2_MG_lasso_varselect.r
 load(file="best_lasso_variables.RData") ## see 2_MG_lasso_varselect.r
@@ -34,27 +60,29 @@ datF$Prcp_seed_prov <- apply(datF[,c("Prcp_2022_3", "Prcp_2022_4", "Prcp_2022_5"
 datA$T_mean_2022_spring <- apply(datA[,c("T_mean_2022_3", "T_mean_2022_4", "T_mean_2022_5")], 1, mean)
 datF$T_mean_2022_spring <- apply(datF[,c("T_mean_2022_3", "T_mean_2022_4", "T_mean_2022_5")], 1, mean)
 
-## keep only lasso selected climate variables + seed variables
+# keep only lasso selected climate variables + seed variables
 seed_vars <- c("Seed_weight_g", "Moisture_content_percent")
 env_vars <- c("Prcp_2022_spring", "T_mean_2022_spring", "clay_15.30cm_garden", "silt_15.30cm_garden", "nitrogen_15.30cm_garden", "bio12_1901_1980_seed_prov")
 modelvars <- c("Genus", "ID", "Garden_ID", "GardenBlock", "Garden_block_spot", "Date", "Date_int", "DOY", "germ", "germ.max.all")
 datA <- datA[, match(c(modelvars, seed_vars, env_vars), names(datA))]
 datF <- datF[, match(c(modelvars, seed_vars, env_vars), names(datF))]
 
-## scale variables
+# scale variables
 datA[, c(seed_vars, env_vars)] <- apply(datA[, c(seed_vars, env_vars)], 2, scale)
 datF[, c(seed_vars, env_vars)] <- apply(datF[, c(seed_vars, env_vars)], 2, scale)
 
-## fixed effects
+# fixed effects
 myfixed <- as.formula(paste("germ.max.all ~", paste(env_vars, collapse = " + ")))
-## two missing provenances for each species!
+# two missing provenances for each species!
 myfixed_seed <- as.formula(paste("germ.max.all ~", paste(c(seed_vars, env_vars), collapse = " + ")))
 
 datA$GardenBlock <- as.factor(datA$GardenBlock)
 datF$GardenBlock <- as.factor(datF$GardenBlock)
 
-## mixed models Abies 
-## ##################
+# =============================================================================
+# mixed models Abies
+# =============================================================================
+
 modA <- asreml(
   fixed  = myfixed_seed,
   random = ~ ID * (Garden_ID + GardenBlock),
@@ -67,17 +95,20 @@ modA <- asreml(
 modA <- update.asreml(modA)
 summary(modA)$varcomp
 wald.asreml(modA)
+# Export results to file
 pdf("asreml_fit_abies.pdf")
 plot(modA)
 dev.off()
-## variance components
+# variance components
 barplot(summary(modA)$varcomp[,1],
         names.arg=unlist(lapply(strsplit(rownames(summary(modA)$varcomp),"!"), function(a) a[1])))
-## fixed effects
+# fixed effects
 barplot(modA$coefficients$fixed[,1])
 
-## mixed models Fagus
-## ##################
+# =============================================================================
+# mixed models Fagus
+# =============================================================================
+
 modF <- asreml(
   fixed  = myfixed_seed,
   random = ~ ID * (Garden_ID + GardenBlock),
@@ -90,16 +121,14 @@ modF <- asreml(
 modF <- update.asreml(modF)
 summary(modF)$varcomp
 wald.asreml(modF)
+# Export results to file
 pdf("asreml_fit_fagus.pdf")
 plot(modF)
 dev.off()
 
-### figure
-## ####################
+# figure
 
-### ===================================================================
-### 1. CLEAN LOOKUP TABLE
-### ===================================================================
+# 1. CLEAN LOOKUP TABLE
 
 lookup <- data.frame(
     var = c(seed_vars, env_vars),
@@ -107,10 +136,7 @@ lookup <- data.frame(
   stringsAsFactors = FALSE
 )
 
-
-### ===================================================================
-### 2. RANDOM EFFECTS (combined panel)
-### ===================================================================
+# 2. RANDOM EFFECTS (combined panel)
 
 vcA <- as.data.frame(summary(modA)$varcomp)
 vcF <- as.data.frame(summary(modF)$varcomp)
@@ -161,11 +187,7 @@ for(i in 1:nrow(vc_df)) {
 }
 vc_df$se_prop <- se_prop
 
-
-
-### ===================================================================
-### 3. FIXED EFFECTS (Abies)
-### ===================================================================
+# 3. FIXED EFFECTS (Abies)
 
 fxA <- as.data.frame(modA$coefficients$fixed)
 names(fxA) <- "Estimate"
@@ -176,7 +198,7 @@ names(waldA) <- c("Wald","p")
 fxA <- cbind(fxA, waldA)
 fxA <- fxA[fxA$Cov != "(Intercept)", ]
 
-## match lookup
+# match lookup
 fxA$Cov_clean <- fxA$Cov
 for(i in 1:nrow(lookup)){
   fxA$Cov_clean[fxA$Cov == lookup$var[i]] <- lookup$nice[i]
@@ -193,10 +215,7 @@ fxA$stars[fxA$p < 0.001] <- "***"
 
 fxA$alpha <- ifelse(fxA$p < 0.05, 1, 0.3)
 
-
-### ===================================================================
-### 4. FIXED EFFECTS (Fagus)
-### ===================================================================
+# 4. FIXED EFFECTS (Fagus)
 
 fxF <- as.data.frame(modF$coefficients$fixed)
 names(fxF) <- "Estimate"
@@ -223,19 +242,13 @@ fxF$stars[fxF$p < 0.001] <- "***"
 
 fxF$alpha <- ifelse(fxF$p < 0.05, 1, 0.3)
 
-
-### ===================================================================
-### 5. COLORS
-### ===================================================================
+# 5. COLORS
 
 species_cols <- c("Abies"="#E18600","Fagus"="#5B84B1")
 
+# 6. PLOTS
 
-### ===================================================================
-### 6. PLOTS
-### ===================================================================
-
-## RANDOM EFFECTS (one panel)
+# RANDOM EFFECTS (one panel)
 p_random <- ggplot(vc_df,
                    aes(x = Prop, y = Effect_clean,
                        fill = Species, alpha = alpha)) +
@@ -254,7 +267,7 @@ p_random <- ggplot(vc_df,
     axis.text.y = element_text(size=11)
   )
 
-## FIXED EFFECTS — Abies
+# FIXED EFFECTS — Abies
 p_fxA <- ggplot(fxA,
                 aes(x=Estimate, y=Cov_clean,
                     fill="Abies", alpha=alpha)) +
@@ -268,7 +281,6 @@ p_fxA <- ggplot(fxA,
   theme(legend.position="none",
         axis.text.y=element_text(size=11),
         plot.margin = margin(5,0,5,5))
-
 
 # FIXED EFFECTS — Fagus
 p_fxF <- ggplot(fxF,
@@ -286,10 +298,8 @@ p_fxF <- ggplot(fxF,
         axis.ticks.y = element_blank(),
         plot.margin = margin(5,5,5,0))
 
+# 7. FINAL COMBINED FIGURE (ONE LEGEND)
 
-### ===================================================================
-### 7. FINAL COMBINED FIGURE (ONE LEGEND)
-### ===================================================================
 final_plot <-
   (
     p_random /
@@ -307,6 +317,7 @@ final_plot <-
     plot.tag.position = c(0, 1)              # x, y in npc units → OUTSIDE
   )
 
+# Export results to file
 ggsave(
   filename = "Figure_mixed_model_mg.pdf",
   plot = final_plot,
@@ -316,6 +327,7 @@ ggsave(
   dpi = 300
 )
 
+# Export results to file
 ggsave(
   filename = "/home/kati/Dropbox/Overleaf/MyGardenOfTrees_PilotPhase_MS/New_Figures/Figure_mixed_model_mg.pdf",
   plot = final_plot,
@@ -324,5 +336,3 @@ ggsave(
   units = "in",
   dpi = 300
 )
-
-

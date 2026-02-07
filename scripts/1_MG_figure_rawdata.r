@@ -1,30 +1,56 @@
-## ##########################################################################
+# Script: 1_MG_figure_rawdata.r
+# Title: Field trial raw data figures for germination
+# Manuscript:
+# Gene–environment interactions govern early regeneration in fir and
+# beech: evidence from participatory provenance trials across Europe
+# by Katalin Csilléry, Justine Charlet de Sauvage, Madleina Caduff,
+# Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel Wegmann
+# Authors: Katalin Csillery
+# Created: 2026-01-28
+# Last updated: 2026-02-07
+##
+# Inputs: dat2022.RData, seed_dat_cols.csv
+# Outputs: Figures of cumulative germination by garden and provenance
+##
+# Notes:
+# Run this script from the project root so relative paths resolve correctly.
+# This script is written as analysis code for a scientific publication.
 
-## Katalin Csillery
+# Overview
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## 28 Jan 2026
+# Overview
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## For the manuscript:
-## Gene–environment interactions govern early regeneration in fir and
-## beech: evidence from participatory provenance trials across Europe
-## by Katalin Csilléry, Justine Charlet de Sauvage, Madleina Caduff,
-## Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel
-## Wegmann
+# Load packages used in this script
+# =============================================================================
+# Overview
+# =============================================================================
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## ###########################################################################
-library(ggplot2)
-library(ggpubr)
-library(dplyr)
-library(scales)
+# Load packages used in this script
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(ggpubr)
+  library(dplyr)
+  library(scales)
+})
 
-## read data
+# read data
 load(file="dat2022.RData")
 
 dat.all <- subset(dat.all, Date <= "2022-09-30") 
 
+# Load input data
 mycols <- read.csv("seed_dat_cols.csv")
 
-## Abies colors
+# Abies colors
 col_Abies <- mycols$col[mycols$Genus == "Abies"]
 names(col_Abies) <- mycols$ID[mycols$Genus == "Abies"]
 
@@ -32,15 +58,14 @@ names(col_Abies) <- mycols$ID[mycols$Genus == "Abies"]
 col_Fagus <- mycols$col[mycols$Genus == "Fagus"]
 names(col_Fagus) <- mycols$ID[mycols$Genus == "Fagus"]
 
-
-## Order gardens by mean GDD so facets are meaningful
+# Order gardens by mean GDD so facets are meaningful
 garden.order <- with(subset(dat.all, Month %in% c(1:6)), ## take only month till June
                             tapply(GDD, Garden_ID, mean, na.rm = TRUE))
 garden.order <- names(sort(garden.order))
 
 dat.all$Garden_ID <- factor(dat.all$Garden_ID, levels = garden.order)
 
-## create garden label
+# create garden label
 garden.meta <- unique(dat.all[c("Garden_ID", "Country_garden")])
 garden.meta$Garden_label <- paste(paste("Garden", garden.meta$Garden_ID),
                                   " (", garden.meta$Country_garden, ")", sep="")
@@ -50,11 +75,11 @@ lab.vec <- garden.meta$Garden_label
 names(lab.vec) <- garden.meta$Garden_ID
 lab.vec <- lab.vec[lab.vec != "Garden 13 (NA)"]
 
-## separate data for species
+# separate data for species
 datA <- subset(dat.all, Genus == "Abies")
 datF <- subset(dat.all, Genus == "Fagus")
 
-## monotonous smoothing function
+# monotonous smoothing function
 mono_smooth <- function(df) {
   df <- df[order(df$GDD), ]
   iso <- isoreg(df$GDD, df$germ.cum)
@@ -105,10 +130,7 @@ infoF <- datF %>%
   ) %>%
   mutate(x = Inf, y = Inf)
 
-
-### ============================================================
-### theme
-### ============================================================
+# theme
 
 theme_pub <- theme_bw(base_size = 12) +
   theme(
@@ -125,7 +147,7 @@ theme_pub <- theme_bw(base_size = 12) +
     plot.title = element_text(size = 14, face = "bold")
   ) 
 
-## plot Abies
+# plot Abies
 
 plot.Abies <- ggplot(datA) +
 
@@ -163,7 +185,7 @@ plot.Abies <- ggplot(datA) +
             hjust = -0.1, vjust = 5, size = 3, inherit.aes = FALSE) +
 
   scale_color_manual(values = col_Abies) +
-    
+
     facet_wrap(~ Garden_ID, ncol = 4, scales = "free_x",
                labeller = labeller(Garden_ID = lab.vec)) +
 
@@ -183,12 +205,6 @@ plot.Abies <- ggplot(datA) +
     strip.text = element_text(size = 8),
     legend.position = "bottom"
   )
-
-
-
-## ####################################
-
-
 
 plot.Fagus <- ggplot(datF) +
 
@@ -211,7 +227,6 @@ plot.Fagus <- ggplot(datF) +
     linewidth = 0.4,
     linetype = "dashed"
   ) +
-
 
   geom_text(data = nF.dates,
             aes(x = -Inf, y = Inf, label = paste0("N observations = ", dates)),
@@ -247,6 +262,7 @@ plot.Fagus <- ggplot(datF) +
     legend.position = "bottom"
   )
 
-
+# Export results to file
 ggsave("Abies_monotone_GDD.pdf", plot.Abies, width = 10, height = 12, dpi = 300)
+# Export results to file
 ggsave("Fagus_monotone_GDD.pdf", plot.Fagus, width = 10, height = 12, dpi = 300)

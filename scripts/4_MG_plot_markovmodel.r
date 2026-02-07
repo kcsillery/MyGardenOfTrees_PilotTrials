@@ -1,26 +1,51 @@
-## ##########################################################################
+# Script: 4_MG_plot_markovmodel.r
+# Title: Plots for Markov model maximum likelihood estimates
+# Manuscript:
+# Gene–environment interactions govern early regeneration in fir and
+# beech: evidence from participatory provenance trials across Europe
+# by Katalin Csilléry, Justine Charlet de Sauvage, Madleina Caduff,
+# Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel Wegmann
+# Authors: Katalin Csillery
+# Created: 2026-01-28
+# Last updated: 2026-02-07
+##
+# Inputs: Abies_MLE.txt, Fagus_MLE.txt, seed_dat_cols.csv, mm_dat.RData
+# Outputs: Exploratory plots and publication ready panels
+##
+# Notes:
+# Run this script from the project root so relative paths resolve correctly.
+# This script is written as analysis code for a scientific publication.
 
-## Katalin Csillery
+# Overview
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## 28 Jan 2026
+# Overview
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## For the manuscript:
-## Gene–environment interactions govern early regeneration in fir and
-## beech: evidence from participatory provenance trials across Europe
-## by Katalin Csilléry, Justine Charlet de Sauvage, Madleina Caduff,
-## Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel
-## Wegmann
+# Load packages used in this script
+# =============================================================================
+# Overview
+# =============================================================================
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## ###########################################################################
-library(dplyr)
-library(ggsci)
-library(scales)
-library(RColorBrewer)
+# Load packages used in this script
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggsci)
+  library(scales)
+  library(RColorBrewer)
+})
 
 source("00_plot.r")
 
-mle.a <- read.table("Abies_MLE.txt", header = T)
-mle.f <- read.table("Fagus_MLE.txt", head=T)
+mle.a <- read.table("Abies_MLE.txt", header = TRUE)
+mle.f <- read.table("Fagus_MLE.txt", head=TRUE)
 
 # plot as matrix
 plot(mle.a[,c("g", "alpha", "beta", "delta", "g_without_death", "p_survive_until_x_1", "p_survive_until_x_5", "p_survive_until_x_7")],
@@ -33,19 +58,19 @@ plot(mle.f[,c("g", "alpha", "beta", "delta", "g_without_death", "p_survive_until
 plot(mle.f[,c("g", "alpha", "beta", "delta", "g_without_death", "p_survive_until_x_1", "p_survive_until_x_3", "p_survive_until_x_7")],
      col=as.factor(mle.f$provenance))
 
-## g and delta are uncorrelated, but Px is correlated to both
-## more clustering based on garden then provenance in abies, not much clustering either way for fagus
+# g and delta are uncorrelated, but Px is correlated to both
+# more clustering based on garden then provenance in abies, not much clustering either way for fagus
 
-## combine results with seed data
+# combine results with seed data
 mle.a$Genus = "Abies"
 mle.f$Genus = "Fagus"
 seed.dat = read.csv("seed_dat_cols.csv")
 seed.dat$provenance = seed.dat$Provenance
-dat1 = merge(mle.a, seed.dat, by=c("provenance", "Genus"), all.x=T)
-dat2 = merge(mle.f, seed.dat, by=c("provenance", "Genus"), all.x=T)
+dat1 = merge(mle.a, seed.dat, by=c("provenance", "Genus"), all.x=TRUE)
+dat2 = merge(mle.f, seed.dat, by=c("provenance", "Genus"), all.x=TRUE)
 dat = rbind(dat1, dat2)
 
-## remove, not germinated
+# remove, not germinated
 dat = subset(dat, !ID %in% c("FS_CH1", "FS_RO1", "AA_AT1"))
 
 dat$Garden_ID <- as.character(as.numeric(unlist(lapply(strsplit(dat$garden, split="_"), function(a) a[1]))))
@@ -53,34 +78,33 @@ dat$Block <- gsub("21", "", unlist(lapply(strsplit(dat$garden, split="_"), funct
 dat$Block[is.na(dat$Block)] <- ""
 dat$Garden_ID21 <- paste(dat$Garden_ID, dat$Block, sep="")
 
-## combine with climate chamber
+# combine with climate chamber
 load("../climate_chamber/mm_dat.RData")
-all.dat <- merge(dat, mm.dat[c("ID", "g_MLE", "gamma_MLE", "delta_MLE", "alpha_MLE", "beta_MLE")], by="ID", all=T)
+all.dat <- merge(dat, mm.dat[c("ID", "g_MLE", "gamma_MLE", "delta_MLE", "alpha_MLE", "beta_MLE")], by="ID", all=TRUE)
 
-## order provenances by germ
+# order provenances by germ
 all.dat.abies = subset(all.dat, Genus == "Abies")
 all.dat.fagus = subset(all.dat, Genus == "Fagus")
 
-myord.p = aggregate(all.dat$g_without_death, list(all.dat$Genus, all.dat$ID), mean, na.rm=T)
+myord.p = aggregate(all.dat$g_without_death, list(all.dat$Genus, all.dat$ID), mean, na.rm=TRUE)
 abies.ord.p = myord.p$Group.2[myord.p$Group.1=="Abies"][order(myord.p$x[myord.p$Group.1=="Abies"])]
 fagus.ord.p = myord.p$Group.2[myord.p$Group.1=="Fagus"][order(myord.p$x[myord.p$Group.1=="Fagus"])]
 
-all.dat.abies$ID = factor(all.dat.abies$ID, ordered=T, levels=abies.ord.p)
-all.dat.fagus$ID = factor(all.dat.fagus$ID, ordered=T, levels=fagus.ord.p)
+all.dat.abies$ID = factor(all.dat.abies$ID, ordered=TRUE, levels=abies.ord.p)
+all.dat.fagus$ID = factor(all.dat.fagus$ID, ordered=TRUE, levels=fagus.ord.p)
 
-## order gardens by garden
-myord.g = aggregate(all.dat$g_without_death, list(all.dat$Genus, all.dat$Garden_ID21), mean, na.rm=T)
-abies.ord = myord.g$Group.2[myord.g$Group.1=="Abies"][order(myord.g$x[myord.g$Group.1=="Abies"], decreasing=T)]
-fagus.ord = myord.g$Group.2[myord.g$Group.1=="Fagus"][order(myord.g$x[myord.g$Group.1=="Fagus"], decreasing=T)]
+# order gardens by garden
+myord.g = aggregate(all.dat$g_without_death, list(all.dat$Genus, all.dat$Garden_ID21), mean, na.rm=TRUE)
+abies.ord = myord.g$Group.2[myord.g$Group.1=="Abies"][order(myord.g$x[myord.g$Group.1=="Abies"], decreasing=TRUE)]
+fagus.ord = myord.g$Group.2[myord.g$Group.1=="Fagus"][order(myord.g$x[myord.g$Group.1=="Fagus"], decreasing=TRUE)]
 
-all.dat.abies$Garden_ID21 = factor(all.dat.abies$Garden_ID21, ordered=T, levels=abies.ord)
-all.dat.fagus$Garden_ID21 = factor(all.dat.fagus$Garden_ID21, ordered=T, levels=fagus.ord)
+all.dat.abies$Garden_ID21 = factor(all.dat.abies$Garden_ID21, ordered=TRUE, levels=abies.ord)
+all.dat.fagus$Garden_ID21 = factor(all.dat.fagus$Garden_ID21, ordered=TRUE, levels=fagus.ord)
 
 all.dat.abies = all.dat.abies[order(all.dat.abies$ID, all.dat.abies$Garden_ID21), ]
 all.dat.fagus = all.dat.fagus[order(all.dat.fagus$ID, all.dat.fagus$Garden_ID21), ]
 
-
-## print equation
+# print equation
 print.eq <- function(fit, df){
     cf <- round(coef(fit), 2) 
     eq <- paste0("y = ", cf[1],
@@ -90,11 +114,12 @@ print.eq <- function(fit, df){
     mtext(pval, 3, line=-3)
 }
 
-################################################
+# #
+
 pdf("Figure_results_mg.pdf", 18, 10)
 par(mfrow=c(2,4), bty="l", cex.lab=1.5, cex.axis=1.4, mar=c(7,6,5,0))
 
-## abies
+# abies
 par(xaxt="n")
 tmp <- na.omit(all.dat.abies[, c("g_without_death", "g_MLE", "ID", "Garden_ID21","never_germinated", "col")])
 plot(tmp$g_without_death ~ tmp$g_MLE, col=tmp$col, pch=20,
@@ -107,6 +132,7 @@ axis(side = 3)
 mtext("Germination rate (climate chamber)", 3, 3, cex=1.2)
 mtext("Germination rate (field trials)", 2, 3, cex=1.2)
 
+# Fit statistical model
 fit <- lm(g_without_death ~ g_MLE, dat=tmp)
 newx <- seq(min(tmp$g_MLE), max(tmp$g_MLE), length.out=nrow(tmp))
 preds <- predict(fit, newdata = data.frame(g_MLE=newx), interval = 'confidence')
@@ -127,7 +153,7 @@ makeImageWithMeans(data, stat = mean)
 mtext("Garden ID", 2, 3.5)
 mtext("b", line=2.3, adj=0, cex=1.8)
 
-## fagus
+# fagus
 par(xaxt="n")
 tmp <- na.omit(all.dat.fagus[, c("g_without_death", "g_MLE", "ID", "Garden_ID21","never_germinated", "col")])
 plot(tmp$g_without_death ~ tmp$g_MLE, col=tmp$col, pch=20, xlim=c(0,.7),
@@ -140,6 +166,7 @@ axis(side = 3)
 mtext("Germination rate (climate chamber)", 3, 3, cex=1.2)
 mtext("Germination rate (field trials)", 2, 3, cex=1.2)
 
+# Fit statistical model
 fit <- lm(g_without_death ~ g_MLE, dat=tmp)
 newx <- seq(min(tmp$g_MLE), max(tmp$g_MLE), length.out=nrow(tmp))
 preds <- predict(fit, newdata = data.frame(g_MLE=newx), interval = 'confidence')
@@ -160,10 +187,10 @@ makeImageWithMeans(data, stat = mean)
 mtext("Garden ID", 2, 3.5)
 mtext("d", line=2.3, adj=0, cex=1.8)
 
-## pdf("Figure_resultsFT-CC_delta.pdf", 9, 10)
-## par(mfrow=c(2,2), bty="l", cex.lab=1.2, mar=c(6,5,4,0))
+# pdf("Figure_resultsFT-CC_delta.pdf", 9, 10)
+# par(mfrow=c(2,2), bty="l", cex.lab=1.2, mar=c(6,5,4,0))
 
-## abies
+# abies
 par(xaxt="n")
 tmp <- na.omit(all.dat.abies[, c("delta", "delta_MLE", "ID", "Garden_ID21","never_germinated", "col")])
 plot(tmp$delta ~ tmp$delta_MLE, col=tmp$col, pch=20,
@@ -176,7 +203,7 @@ axis(side = 3)
 mtext("Development speed (climate chamber)", 3, 3, cex=1.2)
 mtext("Development speed (field trials)", 2, 3, cex=1.2)
 
-
+# Fit statistical model
 fit <- lm(delta ~ delta_MLE, dat=tmp)
 newx <- seq(min(tmp$delta_MLE), max(tmp$delta_MLE), length.out=nrow(tmp))
 preds <- predict(fit, newdata = data.frame(delta_MLE=newx), interval = 'confidence')
@@ -198,7 +225,7 @@ makeImageWithMeans(data, stat = mean)
 mtext("Garden ID", 2, 3.5)
 mtext("f", line=2.3, adj=0, cex=1.8)
 
-## fagus
+# fagus
 par(xaxt="n")
 tmp <- na.omit(all.dat.fagus[, c("delta", "delta_MLE", "ID", "Garden_ID21","never_germinated", "col")])
 plot(tmp$delta ~ tmp$delta_MLE, col=tmp$col, pch=20,
@@ -211,6 +238,7 @@ axis(side = 3)
 mtext("Development speed (climate chamber)", 3, 3, cex=1.2)
 mtext("Development speed (field trials)", 2, 3, cex=1.2)
 
+# Fit statistical model
 fit <- lm(delta ~ delta_MLE, dat=tmp)
 newx <- seq(min(tmp$delta_MLE), max(tmp$delta_MLE), length.out=nrow(tmp))
 preds <- predict(fit, newdata = data.frame(delta_MLE=newx), interval = 'confidence')
@@ -233,4 +261,3 @@ mtext("Garden ID", 2, 3.5)
 mtext("h", line=2.3, adj=0, cex=1.8)
 
 dev.off()
-

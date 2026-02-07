@@ -1,39 +1,66 @@
-## ##########################################################################
+# Script: 2_MG_lasso_varselect.r
+# Title: Lasso variable selection for germination predictors
+# Manuscript:
+# Gene–environment interactions govern early regeneration in fir and
+# beech: evidence from participatory provenance trials across Europe
+# by Katalin Csilléry, Justine Charlet de Sauvage, Madleina Caduff,
+# Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel Wegmann
+# Authors: Katalin Csillery
+# Created: 2026-01-28
+# Last updated: 2026-02-07
+##
+# Inputs: dat2022.RData and optional excel covariates
+# Outputs: best_lasso_variables.RData and selection diagnostics
+##
+# Notes:
+# Run this script from the project root so relative paths resolve correctly.
+# This script is written as analysis code for a scientific publication.
 
-## Katalin Csillery
+# Overview
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## 28 Jan 2026
+# Overview
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## For the manuscript:
-## Gene–environment interactions govern early regeneration in fir and
-## beech: evidence from participatory provenance trials across Europe
-## by Katalin Csilléry, Justine Charlet de Sauvage, Madleina Caduff,
-## Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel
-## Wegmann
+# Load packages used in this script
+# =============================================================================
+# Overview
+# =============================================================================
+# This script reproduces a component of the analysis for the manuscript.
+# It follows a linear pipeline: setup, data import, processing, modelling,
+# and figure or table export.
 
-## ###########################################################################
+# Load packages used in this script
+suppressPackageStartupMessages({
+  library(lubridate)
+  library(RColorBrewer)
+  library(glmnet)
+  library(readxl)
+})
 
-library(lubridate)
-library(RColorBrewer)
-library(glmnet)
-library(readxl)
+# =============================================================================
+# all data
+# =============================================================================
 
-##    all data
-## ###############
 load("dat2022.RData") 
 dat.all <- subset(dat.all, Date <= "2022-07-01") ## germination process only - no summer or autumn survival here
 
-##    Abies
-## ###############
+# =============================================================================
+# Abies
+# =============================================================================
 
 datA <- subset(dat.all, Genus=="Abies")
-## remove provenances that are not tested everywhere
+# remove provenances that are not tested everywhere
 ##datA <- subset(datA, ! ID %in% c("AA_HR1", "AA_PL1", "AA_SI1", "AA_IT1"))
 datA <- subset(datA, ! ID %in% c("AA_HR1","AA_IT1"))
-## remove garden where sample sizes are small
+# remove garden where sample sizes are small
 ##datA <- subset(datA, ! Garden_ID %in% c(3, 5, 16))
 
-## make factors
+# make factors
 datA$Garden_ID <- as.factor(datA$Garden_ID)
 datA$Block <- as.factor(datA$Block)
 datA$Garden_block_spot <- as.factor(datA$Garden_block_spot)
@@ -41,31 +68,31 @@ datA$ID <- as.factor(datA$ID)
 
 ##date
 datA$Date <- as.Date(datA$Date)
-datA$Date <- factor(datA$Date, ordered=T)
+datA$Date <- factor(datA$Date, ordered=TRUE)
 datA$Date_int <- as.integer(as.factor(datA$Date))
 
-## response variable: cummulative max germination rate
-datA$germ.max.all <- ave(datA$germ, datA$Garden_ID, datA$Block, datA$Seedling_spot_true, datA$ID, FUN = cummax, na.rm=T)
+# response variable: cummulative max germination rate
+datA$germ.max.all <- ave(datA$germ, datA$Garden_ID, datA$Block, datA$Seedling_spot_true, datA$ID, FUN = cummax, na.rm=TRUE)
 
-## order by Garden_block_spot, then Date
+# order by Garden_block_spot, then Date
 datA <- datA[order(datA$Garden_block_spot, datA$Date), ]
 
-## GET RID OF TIME: keep last row of each Garden_block_spot
+# GET RID OF TIME: keep last row of each Garden_block_spot
 datA <- datA[!duplicated(datA$Garden_block_spot, fromLast = TRUE), ]
 
-## order
+# order
 datA <- datA[order(datA$ID, datA$Garden_ID, datA$Block, datA$Garden_block_spot), ]
 
-
-##    Fagus
-## ###############
+# =============================================================================
+# Fagus
+# =============================================================================
 
 datF <- subset(dat.all, Genus=="Fagus")
-## remove provenances that are not tested everywhere
+# remove provenances that are not tested everywhere
 datF <- subset(datF, ! ID %in% c("FS_AT1"))
 datF <- subset(datF, ! Garden_ID %in% c(3, 16))
 
-## make factors
+# make factors
 datF$Garden_ID <- as.factor(datF$Garden_ID)
 datF$Block <- as.factor(datF$Block)
 datF$Garden_block_spot <- as.factor(datF$Garden_block_spot)
@@ -73,57 +100,58 @@ datF$ID <- as.factor(datF$ID)
 
 ##date
 datF$Date <- as.Date(datF$Date)
-datF$Date <- factor(datF$Date, ordered=T)
+datF$Date <- factor(datF$Date, ordered=TRUE)
 datF$Date_int <- as.integer(as.factor(datF$Date))
 
-## response variable: cummulative max germination rate
-datF$germ.max.all <- ave(datF$germ, datF$Garden_ID, datF$Block, datF$Seedling_spot_true, datF$ID, FUN = cummax, na.rm=T)
+# response variable: cummulative max germination rate
+datF$germ.max.all <- ave(datF$germ, datF$Garden_ID, datF$Block, datF$Seedling_spot_true, datF$ID, FUN = cummax, na.rm=TRUE)
 
-## order by Garden_block_spot, then Date
+# order by Garden_block_spot, then Date
 datF <- datF[order(datF$Garden_block_spot, datF$Date), ]
 
-## GET RID OF TIME: keep last row of each Garden_block_spot
+# GET RID OF TIME: keep last row of each Garden_block_spot
 datF <- datF[!duplicated(datF$Garden_block_spot, fromLast = TRUE), ]
 
-## order
+# order
 datF <- datF[order(datF$ID, datF$Garden_ID, datF$Block, datF$Garden_block_spot), ]
-
 
 save(datA, datF, file="dat2022_germ.RData")
 
-## ############################################################
-## lasso regression for the environmental variables - ABIES
-## ##########################################################
+# =============================================================================
+# lasso regression for the environmental variables - ABIES
+# =============================================================================
 
 env_vars <- read_xlsx(file="Table_S1_environmental_variables_LASSO.xlsx")
 X <- datA[, match(env_vars$Variable_short_name, names(datA))]
+# Transform data and derive analysis variables
 X <- X[, apply(X, 2, function(a) length(na.omit(a))==length(a))] ## select columns without NA
 y <- datA$germ.max.all
 X_scaled <- scale(X)
 X_mat <- model.matrix(~ . - 1, data = as.data.frame(X_scaled))
 
 set.seed(123)
+# Fit statistical model
 lasso_fit <- cv.glmnet(
   X_mat, y,
   family = "poisson",
   alpha = 1          
 )
 
-## Extract coefficients
+# Extract coefficients
 coef_df <- as.data.frame(as.matrix(coef(lasso_fit, s = "lambda.1se")))
 coef_df$variable <- rownames(coef_df)
 colnames(coef_df)[1] <- "coef"
 
-## join with type
+# join with type
 coef_df <- merge(coef_df, env_vars)
 
-## Filter out intercept and zero coefficients
+# Filter out intercept and zero coefficients
 coef_df <- coef_df[coef_df$variable != "(Intercept)" & coef_df$coef != 0, ]
 
-## Order by absolute coefficient
+# Order by absolute coefficient
 coef_df <- coef_df[order(abs(coef_df$coef)), ]
 
-## table
+# table
 lasso_table <- data.frame(
   variable = coef_df$variable,
   coef     = coef_df$coef,
@@ -133,11 +161,12 @@ lasso_table <- data.frame(
   row.names = NULL,
   stringsAsFactors = FALSE
 )
-## sort by absolute strength
+# sort by absolute strength
 lasso_table <- lasso_table[order(-lasso_table$abs_coef), ]
+# Export results to file
 write.csv(lasso_table, "LASSO_coefficients_abies.csv", row.names = FALSE)
 
-## reducing variables to a smaller set:
+# reducing variables to a smaller set:
 p <- 1   # top %
 n_keep <- ceiling(nrow(lasso_table) * p)
 selected <- head(lasso_table[order(-lasso_table$abs_coef), ], n_keep)
@@ -150,8 +179,10 @@ clusters <- cutree(hc, h = 0.7)  ## adjust h to control cluster size
 group_list_abies <- split(names(clusters), clusters)
 lasso_table_abies <- lasso_table
 
-## Plot
-## #############
+# =============================================================================
+# Plot
+# =============================================================================
+
 oi <- c(
   "Provenance climate" = "#0072B2",  # blue
   "Provenance soil"    = "#56B4E9",  # lighter blue
@@ -160,6 +191,7 @@ oi <- c(
   "Garden soil"        = "#5DC8A8"   # lighter green
 )
 
+# Export results to file
 pdf("LASSO_coefficients_plot_abies.pdf", width = 7, height = 8) 
 
 par(
@@ -211,9 +243,9 @@ legend(
 
 dev.off()
 
-## ############################################################
-## lasso regression for the environmental variables - FAGUS
-## ########################################################## 
+# =============================================================================
+# lasso regression for the environmental variables - FAGUS
+# =============================================================================
 
 env_vars <- read.csv(file="env_vars_modified.csv")
 X <- datF[, match(env_vars$Variable_short_name, names(datF))]
@@ -223,27 +255,28 @@ X_scaled <- scale(X)
 X_mat <- model.matrix(~ . - 1, data = as.data.frame(X_scaled))
 
 set.seed(123)
+# Fit statistical model
 lasso_fit <- cv.glmnet(
   X_mat, y,
   family = "poisson",
   alpha = 1          
 )
 
-## Extract coefficients
+# Extract coefficients
 coef_df <- as.data.frame(as.matrix(coef(lasso_fit, s = "lambda.1se")))
 coef_df$variable <- rownames(coef_df)
 colnames(coef_df)[1] <- "coef"
 
-## join with type
+# join with type
 coef_df <- merge(coef_df, env_vars)
 
-## Filter out intercept and zero coefficients
+# Filter out intercept and zero coefficients
 coef_df <- coef_df[coef_df$variable != "(Intercept)" & coef_df$coef != 0, ]
 
-## Order by absolute coefficient
+# Order by absolute coefficient
 coef_df <- coef_df[order(abs(coef_df$coef)), ]
 
-## table
+# table
 lasso_table <- data.frame(
   variable = coef_df$variable,
   coef     = coef_df$coef,
@@ -253,11 +286,12 @@ lasso_table <- data.frame(
   row.names = NULL,
   stringsAsFactors = FALSE
 )
-## sort by absolute strength
+# sort by absolute strength
 lasso_table <- lasso_table[order(-lasso_table$abs_coef), ]
+# Export results to file
 write.csv(lasso_table, "LASSO_coefficients_fagus.csv", row.names = FALSE)
 
-## reducing variables to a smaller set:
+# reducing variables to a smaller set:
 p <- 0.50   # top %
 n_keep <- ceiling(nrow(lasso_table) * p)
 selected <- head(lasso_table[order(-lasso_table$abs_coef), ], n_keep)
@@ -271,8 +305,9 @@ group_list_fagus <- split(names(clusters), clusters)
 
 lasso_table_fagus <- lasso_table
 
-## Plot
-## #############
+# =============================================================================
+# Plot
+# =============================================================================
 
 pdf("LASSO_coefficients_plot_fagus.pdf", width = 7, height = 8) 
 
@@ -325,8 +360,6 @@ legend(
 
 dev.off()
 
-
 save(group_list_abies, group_list_fagus, lasso_table_abies,lasso_table_fagus, file="best_lasso_variables.RData")
 
 intersect(unlist(group_list_fagus), unlist(group_list_abies))
-
