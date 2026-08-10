@@ -79,6 +79,15 @@ R scripts for statistical analysis and figure generation.
   Three-year survival analysis from micro-garden trials  
   *(Figure 5)*
 
+  
+- **`7_MG_climate_transfer_distance.r`**  
+  Germination rate as a function of geographic and environmental transfer distances between provenance and garden
+  *(Figure S10)*
+
+- **`8_MG_prov_specific_slopes.r`**  
+  Testing provenance specific slopes for environmental gradients 
+  *(Wald test reported in the text)*
+
 ---
 
 ### `docs/`
