@@ -122,8 +122,8 @@ Supporting Information for the accepted manuscript:
   - **Table S3:** Germination metrics across species, provenances, treatments, and experimental cycles.
   - **Table S4:** Wald tests for fixed effects retained in the final mixed-effects germination models.
   - **Table S5:** Generalized additive models (GAMs) of germination rate as a function of geographic and environmental transfer distances.
-  - **`Methods S2`** Climate and soil data and variable selection using LASSO regression.
-  - **`Methods S3`** Description of a hidden Markov model of seed germination, phenological development, and mortality, including the inference and importance sampling scheme.
+  - **Methods S2:** Climate and soil data and variable selection using LASSO regression.
+  - **Methods S3:** Description of a hidden Markov model of seed germination, phenological development, and mortality, including the inference and importance sampling scheme.
   
 - **`Methods_S1.pdf`**  
   Protocols for establishing and monitoring the *MyGardenOfTrees* climate chamber and micro-garden experiments.
