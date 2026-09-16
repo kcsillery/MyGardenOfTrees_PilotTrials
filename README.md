@@ -8,11 +8,11 @@
 
 ## 📄 Manuscript
 
-The manuscript associated with this work is available on **bioRxiv**.
+The manuscript associated with this work is accepted in New Phytologist.
 
-Gene–environment interactions govern early regeneration in fir and beech: evidence from participatory provenance trials across Europe
-Katalin Csilléry, Justine Charlet de Sauvage, Madleina Caduff, Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel Wegmann
-bioRxiv 2026.01.29.702314; doi: https://doi.org/10.64898/2026.01.29.702314 
+Link to the published version will follow. 
+
+In the meantime, an earlier version is available here: https://doi.org/10.64898/2026.01.29.702314 
 
 ---
 
@@ -41,8 +41,7 @@ Raw and processed datasets used in the analyses.
   Seed traits and provenance information (including color codes)
 
 - **`Table_S1_environmental_variables_LASSO.xlsx`**  
-  Environmental variables considered for variable selection
-
+  Environmental variables considered for variable selection (Table S2 in the accepted manuscript)
 ---
 
 ### `GDD/`
@@ -82,17 +81,18 @@ R scripts for statistical analysis and figure generation.
   
 - **`7_MG_climate_transfer_distance.r`**  
   Germination rate as a function of geographic and environmental transfer distances between provenance and garden
-  *(Figure S10)*
+  *(Figure S11)*
 
 - **`8_MG_prov_specific_slopes.r`**  
   Testing provenance specific slopes for environmental gradients 
   *(Wald test reported in the text)*
 
 ---
-
 ### `docs/`
 
-Supporting Information files as referenced in the manuscript.
+Supporting Information for the accepted manuscript: Figs S1–S11, Tables S1–S5, and Methods S1–S3. Methods S1–S3 are also supplied to the journal as Supporting Information.
+
+- **`Dataset_S1.zip`** contains the XLSForms and associated media files used for standardized data collection in the *MyGardenOfTrees* citizen science project. Dataset S1 is available from this repository.
 
 - **`Figures_S1-14_Table_S1.pdf`**  
   Supplementary figures and table, including:
@@ -109,9 +109,6 @@ Supporting Information files as referenced in the manuscript.
 
 - **`Methods_S2.pdf`**  
   Description of a hidden Markov model of seed germination, phenological development, and mortality, including the inference and importance sampling scheme.
-
-- **`Dataset_S1.zip`**  
-  XLSForms and associated media files used for standardized data collection in the *MyGardenOfTrees* citizen science project.
 
 ---
 
