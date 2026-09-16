@@ -105,27 +105,23 @@ R scripts for statistical analysis and figure generation.
 Supporting Information for the accepted manuscript: Figs S1–S11, Tables S1–S5, and Methods S1–S3. Methods S1–S3 are also supplied to the journal as Supporting Information.
 
 - **`Figures_S1-11_Table_S1-5.pdf`**  
-| Item | Description |
-|---|---|
-| Fig. S1 | Climate chamber trays for fir (*Abies*) and beech (*Fagus*) germination. |
-| Fig. S2 | Phenological stages used to score germination and early seedling development. |
-| Fig. S3 | Cumulative germination as a function of growing degree-days in the field experiments. |
-| Fig. S4 | Fir (*Abies*) phenological development in climate chambers and field experiments. |
-| Fig. S5 | Beech (*Fagus*) phenological development in climate chambers and field experiments. |
-| Fig. S6 | Diagnostic plots for mixed-effects models of germination. |
-| Fig. S7 | Climate chamber germination trajectories across provenances. |
-| Fig. S8 | Effect of experimental cycle length on germination metrics. |
-| Fig. S9 | Correlations among germination metrics, geography, and seed traits. |
-| Fig. S10 | LASSO-selected environmental predictors for fir and beech, ranked by standardized regression coefficients. |
-| Fig. S11 | Germination rate as a function of geographic and environmental transfer distances. |
-| Table S1 | Information about the seed stands and origin certificates. |
-| Table S2 | Environmental covariates used for variable selection in the LASSO regression. |
-| Table S3 | Germination metrics across species, provenances, treatments, and experimental cycles. |
-| Table S4 | Wald tests for fixed effects retained in the final mixed-effects germination models. |
-| Table S5 | Generalized additive models of germination rate as a function of geographic and environmental transfer distances. |
-
-- **`Methods_S1.pdf`**  
-  Protocols for establishing and monitoring the MyGardenOfTrees climate chamber and field experiments.
+Supporting Information for the accepted manuscript:
+  - **Fig. S1:** Climate chamber trays for fir (*Abies*) and beech (*Fagus*) germination.
+  - **Fig. S2:** Phenological stages used to score germination and early seedling development.
+  - **Fig. S3:** Cumulative germination as a function of growing degree-days in the field experiments.
+  - **Fig. S4:** Fir (*Abies*) phenological development in climate chambers and field experiments.
+  - **Fig. S5:** Beech (*Fagus*) phenological development in climate chambers and field experiments.
+  - **Fig. S6:** Diagnostic plots for mixed-effects models of germination.
+  - **Fig. S7:** Climate chamber germination trajectories across provenances.
+  - **Fig. S8:** Effect of experimental cycle length on germination metrics.
+  - **Fig. S9:** Correlations among germination metrics, geography, and seed traits.
+  - **Fig. S10:** LASSO-selected environmental predictors ranked by their standardized regression coefficients for fir and beech.
+  - **Fig. S11:** Germination rate as a function of geographic and environmental transfer distances.
+  - **Table S1:** Information about the seed stands and origin certificates.
+  - **Table S2:** Environmental covariates used for variable selection in the LASSO regression.
+  - **Table S3:** Germination metrics across species, provenances, treatments, and experimental cycles.
+  - **Table S4:** Wald tests for fixed effects retained in the final mixed-effects germination models.
+  - **Table S5:** Generalized additive models (GAMs) of germination rate as a function of geographic and environmental transfer distances.
 
 - **`Methods_S2.pdf`**  
   Climate and soil data and variable selection using LASSO regression.
