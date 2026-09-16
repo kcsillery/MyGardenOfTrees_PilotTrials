@@ -104,7 +104,7 @@ R scripts for statistical analysis and figure generation.
 
 Supporting Information for the accepted manuscript: Figs S1–S11, Tables S1–S5, and Methods S1–S3. Methods S1–S3 are also supplied to the journal as Supporting Information.
 
-- **`Figures_S1-11_Table_S1-5.pdf`**  
+- **`Csilleryetal_2026_SupplementaryMaterials.pdf`**  
 Supporting Information for the accepted manuscript:
   - **Fig. S1:** Climate chamber trays for fir (*Abies*) and beech (*Fagus*) germination.
   - **Fig. S2:** Phenological stages used to score germination and early seedling development.
@@ -122,15 +122,12 @@ Supporting Information for the accepted manuscript:
   - **Table S3:** Germination metrics across species, provenances, treatments, and experimental cycles.
   - **Table S4:** Wald tests for fixed effects retained in the final mixed-effects germination models.
   - **Table S5:** Generalized additive models (GAMs) of germination rate as a function of geographic and environmental transfer distances.
-
+  - **`Methods S2`** Climate and soil data and variable selection using LASSO regression.
+  - **`Methods S3`** Description of a hidden Markov model of seed germination, phenological development, and mortality, including the inference and importance sampling scheme.
+  
 - **`Methods_S1.pdf`**  
   Protocols for establishing and monitoring the *MyGardenOfTrees* climate chamber and micro-garden experiments.
   
-- **`Methods_S2.pdf`**  
-  Climate and soil data and variable selection using LASSO regression.
-  
-- **`Methods_S3.pdf`**  
-  Description of a hidden Markov model of seed germination, phenological development, and mortality, including the inference and importance sampling scheme.
 ---
 
 ## 🧰 Requirements
