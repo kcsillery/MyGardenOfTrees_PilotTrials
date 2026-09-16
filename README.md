@@ -8,11 +8,9 @@
 
 ## 📄 Manuscript
 
-The manuscript associated with this work is accepted in New Phytologist.
+Katalin Csillery, Justine Charlet de Sauvage, Madleina Caduff, Johannes Alt, Marjorie Bison, Mert Celik, Nicole Ponta, Daniel Wegmann. 2026. Provenance and environment jointly shape early regeneration in fir and beech: Evidence from distributed participatory trials across Europe. Accepted in **New Phytologist**.
 
-Link to the published version will follow. 
-
-In the meantime, an earlier version is available here: https://doi.org/10.64898/2026.01.29.702314 
+Link to the published version will follow. In the meantime, an earlier version is available here: https://doi.org/10.64898/2026.01.29.702314 
 
 ---
 
