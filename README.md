@@ -123,6 +123,9 @@ Supporting Information for the accepted manuscript:
   - **Table S4:** Wald tests for fixed effects retained in the final mixed-effects germination models.
   - **Table S5:** Generalized additive models (GAMs) of germination rate as a function of geographic and environmental transfer distances.
 
+- **`Methods_S1.pdf`**  
+  Protocols for establishing and monitoring the *MyGardenOfTrees* climate chamber and micro-garden experiments.
+  
 - **`Methods_S2.pdf`**  
   Climate and soil data and variable selection using LASSO regression.
   
