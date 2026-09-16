@@ -16,6 +16,13 @@ Link to the published version will follow. In the meantime, an earlier version i
 
 ## 📁 Repository Structure
 
+
+### XLSForms
+XLSForms and associated media files used for standardized data collection in the *MyGardenOfTrees* citizen science project. Dataset S1 is available from this repository.
+
+- **`Dataset_S1.zip`**
+
+
 ### `data/`
 Raw and processed datasets used in the analyses.
 
@@ -89,8 +96,6 @@ R scripts for statistical analysis and figure generation.
 ### `docs/`
 
 Supporting Information for the accepted manuscript: Figs S1–S11, Tables S1–S5, and Methods S1–S3. Methods S1–S3 are also supplied to the journal as Supporting Information.
-
-- **`Dataset_S1.zip`** contains the XLSForms and associated media files used for standardized data collection in the *MyGardenOfTrees* citizen science project. Dataset S1 is available from this repository.
 
 - **`Figures_S1-14_Table_S1.pdf`**  
   Supplementary figures and table, including:
